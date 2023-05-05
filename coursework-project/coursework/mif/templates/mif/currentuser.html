@@ -1,0 +1,92 @@
+{% extends 'mif/base.html' %}
+{% load static %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/currentuser.css' %}">
+{% endblock links %}
+
+{% block title %}
+    <title>Личный кабинет</title>
+{% endblock title %}
+
+{% block content %}
+    <main>
+        {% if user.is_authenticated %}
+            <div id="user-data-and-logoutuser">
+                <div id="user-data">
+                    <h1 id="h1-username">{{ user.username }}</h1>
+                    <h3 id="h3-user-data">Личные данные</h3>
+                    <form id="form-user-data" method="POST">
+                        {% csrf_token %}
+                        <table id="table-user-data">
+                            <tr id="head-tr-user-data">
+                                <th class="th-user-data"></th>
+                                <th class="th-user-data">Старые данные</th>
+                                <th class="th-user-data">Новые данные</th>
+                            </tr>
+                            <tr class="tr-user-data">
+                                <td class="td-user-data">Имя аккаунта</td>
+                                <td class="td-user-data">{{ user.username }}</td>
+                                <td class="td-user-data"><input class="input-user-data" type="text" name="username"></td>
+                            </tr>
+                            <tr class="tr-user-data">
+                                <td class="td-user-data">Имя</td>
+                                <td class="td-user-data">{{ user.first_name }}</td>
+                                <td class="td-user-data"><input class="input-user-data" type="text" name="first_name"></td>
+                            </tr>
+                            <tr class="tr-user-data">
+                                <td class="td-user-data">Фамилия</td>
+                                <td class="td-user-data">{{ user.last_name }}</td>
+                                <td class="td-user-data"><input class="input-user-data" type="text" name="last_name"></td>
+                            </tr>
+                            <tr class="tr-user-data">
+                                <td class="td-user-data">Электронная почта</td>
+                                <td class="td-user-data">{{ user.email }}</td>
+                                <td class="td-user-data"><input class="input-user-data" type="text" name="email"></td>
+                            </tr>
+                            <tr class="tr-user-data">
+                                <td class="td-user-data">Номер телефона</td>
+                                <td class="td-user-data">{{ user_profile.phone_number }}</td>
+                                <td class="td-user-data"><input class="input-user-data" type="text" name="phone_number"></td>
+                            </tr>
+                            <tr class="tr-user-data">
+                                <td class="td-user-data">Пароль</td>
+                                <td class="td-user-data">{{ user.password }}</td>
+                                <td class="td-user-data"><input class="input-user-data" type="text" name="password"></td>
+                            </tr>
+                        </table>
+                        <button id="change-user-data-btn">Изменить</button>
+                        <button id="save-changes-user-data" type="submit">Сохранить изменения</button>
+                    </form>
+                </div>
+                <div id="logoutuser">
+                    <form id="logoutuser-form" method="POST" action="{% url 'logoutuser' %}">
+                        {% csrf_token %}
+                        <button id="logoutuser-btn" type="submits">Выйти</button>
+                    </form>
+                </div>
+                <div id="financial-information">
+                    <div id="personal-account">
+                        <button id="personal-account-btn"><a id="personal-account-a" href="#">Открыть лицевой счёт</a></button>
+                    </div>
+                    <div class="client-income">
+                        <div id="share">Ваша доля в фонде = {{ user_profile.share }}</div>
+                    </div>
+                    <div class="client-income">
+                        <div id="current-balance">Ваш текущий баланс = {{ user_profile.current_balance }}</div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <h1 id="Вы не зарегистрированы!"></h1>
+            <div id="signup-login-buttons">
+                <button id="signup-button">
+                    <a id="signup" href="{% url 'signupuser' %}">Зарегистрироваться</a>
+                </button>
+                <button id="login-button">
+                    <a id="login" href="{% url 'loginuser' %}">Войти</a>
+                </button>
+            </div>
+        {% endif %}
+    </main>
+{% endblock content %}

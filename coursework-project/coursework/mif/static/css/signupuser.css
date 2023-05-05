@@ -1,0 +1,34 @@
+#sub-main {
+    background: linear-gradient(200deg, rgba(123,134,232,1) 30%, rgba(246,140,255,1) 50%, rgb(133, 0, 173) 90%);
+    height: 100vh;
+}
+
+#h1-signupuser {
+    text-align: center;
+    margin-top: 0px;
+    padding-top: 20px;
+}
+
+#h3-signupuser {
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+}
+
+#signupuser-form {
+    background-color: white;
+    border-radius: 20px;
+    height: 70ex;
+    width: 35ex;
+}
+
+.form-cell {
+    text-align: center;
+}
+
+.description {
+    height: 22px;
+}

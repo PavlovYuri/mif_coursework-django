@@ -1,0 +1,93 @@
+{% extends 'mif/base.html' %}
+{% load static %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/employees/analyst.css' %}">
+{% endblock links %}
+
+{% block title %}
+    <title>Аналитик</title>
+{% endblock title %}
+
+{% block content %}
+    <main>
+        <div id="sub-main">
+            <h1 id="h1-analyst">Аналитик</h1>
+            <div id="logoutuser">
+                <form id="logoutuser-form" method="POST" action="{% url 'logoutuser' %}">
+                    {% csrf_token %}
+                    <button id="logoutuser-btn" type="submits">Выйти</button>
+                </form>
+            </div>
+            <div id="analytical-plan">
+                <div class="sub-analytical-plan">
+                    <h3 class="h3-analytical-plan">Составление плана купли-продажи</h3>
+                    <form method="POST" id="analytical-plan-form">
+                        {% csrf_token %}
+                        <div class="form-cell">
+                            <div class="div-input-label">Название объекта купли-продажи:</div>
+                            <input class="analytical-input" id="name_obj" name="name_obj">
+                        </div>
+                        <div class="form-cell">
+                            <div class="div-input-label">Статус:</div>
+                            <input class="analytical-input" id="status" name="status">
+                        </div>
+                        <div class="form-cell">
+                            <div class="div-input-label">Количество:</div>
+                            <input class="analytical-input" id="quantity" name="quantity">
+                        </div>
+                        <div class="form-cell">
+                            <div class="div-input-label">Назначенные дата и время:</div>
+                            <input class="analytical-input" id="datetime" name="datetime">
+                        </div>
+                        <button type="submit" id="analytical-plan-btn">Отправить план</button>
+                    </form>
+                </div>
+                <div class="sub-analytical-plan">
+                    <h3 class="h3-analytical-plan">Невыполненные задания</h3>
+                    <table id="table-analytical-plan">
+                        <tr id="head-tr">
+                            <th class="th-analytical-plan">Название объекта купли-продажи</th>
+                            <th class="th-analytical-plan">Статус</th>
+                            <th class="th-analytical-plan">Количество</th>
+                            <th class="th-analytical-plan">Назначенные дата и время</th>
+                            <th class="th-analytical-plan">Статус выполнения</th>
+                            <th class="th-analytical-plan">Токен</th>
+                        </tr>
+                        {% for plan_object in plan_objects %}
+                            <tr class="tr-analytical-plan">
+                                <td class="td-analytical-plan">{{ plan_object.name_obj }}</td>
+                                <td class="td-analytical-plan">{{ plan_object.status }}</td>
+                                <td class="td-analytical-plan">{{ plan_object.quantity }}</td>
+                                <td class="td-analytical-plan">{{ plan_object.datetime }}</td>
+                                <td class="td-analytical-plan">{{ plan_object.is_completed }}</td>
+                                <td class="td-analytical-plan">{{ plan_object.token }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div id="financial-news">
+                <h3>Новости из мира финансов</h3>
+                <div class="financial-news-date">{{ date1.date }}</div>
+                {% for article in articles_arr_1 %}
+                    <div class="financial-news-cell">{{ article.time }}<a href="https://1prime.ru/{{ article.href }}">{{ article.h2 }}</a></div>
+                {% endfor %}
+                <div class="financial-news-date">{{ date2.date }}</div>
+                {% for article in articles_arr_2 %}
+                    <div class="financial-news-cell">{{ article.time }}<a href="https://1prime.ru/{{ article.href }}">{{ article.h2 }}</a></div>
+                {% endfor %}
+            </div>
+            <div id="sending-report">
+                <form method="POST" enctype="multipart/form-data" id="sending-report-form">
+                    {% csrf_token %}
+                    <p>Наименование сотрудника:</p>
+                    <input id="employee" type="text" name="employee">
+                    <p>Загрузить отчёт:</p>
+                    <input id="upload-file" type="file" name="report">
+                    <button id="sending-report-button" type="submit">Отправить отчёт</button>
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

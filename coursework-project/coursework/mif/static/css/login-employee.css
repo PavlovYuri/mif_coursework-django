@@ -1,0 +1,35 @@
+#sub-main {
+    height: 100vh;
+    background: linear-gradient(200deg, rgba(123,134,232,1) 30%, rgba(246,140,255,1) 50%, rgb(133, 0, 173) 90%);
+}
+
+#h1-login-employee {
+    margin-top: 0px;
+    padding-top: 20px;
+    text-align: center;
+}
+
+#h3-login-employee {
+    text-align: center;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+}
+
+#login-employee-form {
+    background-color: white;
+    width: 35ex;
+    height: 30ex;
+    border-radius: 20px;
+}
+
+.form-cell {
+    text-align: center;
+}
+
+.description {
+    height: 22px;
+}

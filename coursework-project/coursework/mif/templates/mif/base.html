@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Nunito+Sans:wght@200;300&family=Open+Sans&display=swap" rel="stylesheet">
+
+        <meta charset="utf-8">
+        
+        <link rel="stylesheet" href="{% static 'css/base.css' %}" > 
+
+        {% block links %}
+
+        {% endblock links %}
+
+        {% block title %}
+
+        {% endblock title %}
+    </head>
+    <body>
+        <nav id="navbar">
+            <div id="nav-container">
+                <ul id="nav-ul">
+                    <li class="nav-item" id="logo">
+                        <a class="nav-link" href="#">Logo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Частным клиентам</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_employee' %}">Сотрудникам</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Партнёрам</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Готовые решения</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ценные бумаги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ещё</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Theme</a>
+                    </li>
+                    <li class="nav-item" id="form">
+                        <form class="search-box">
+                            <input class="search-txt" type="text" placeholder="Поиск">
+                            <a class="search-btn" href="#"><i class='fa fa-search' aria-hidden="true"></i></a>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        {% block intro %}
+            
+        {% endblock intro %}
+
+        {% block content %}
+
+        {% endblock content %}
+
+        <footer>
+
+        </footer>
+
+        <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+        {% block scripts %}
+        
+        {% endblock scripts %}
+
+    </body> 
+</html>

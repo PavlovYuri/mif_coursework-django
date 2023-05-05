@@ -1,0 +1,32 @@
+{% extends 'mif/base.html' %}
+{% load static %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock links %}
+
+{% block title %}
+    <title>Главная</title>
+{% endblock title %}
+
+
+{% block intro %}
+    <div id="intro">
+        <div id="in">
+            <h1 id="h1-intro">Добро пожаловать!</h1>
+            <h2 id="h2-intro">Наш паевой инвестиционный фонд поможет Вам выгодно инвестировать свои средства с минимальными рисками</h2>
+            <div id="intro-buttons">
+                <button id="signup-button">
+                    <a id="signup" href="{% url 'signupuser' %}">Зарегистрироваться</a>
+                </button>
+                <button id="login-button">
+                    <a id="login" href="{% url 'loginuser' %}">Войти</a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+{% endblock intro %}
+
+{% block content %}
+
+{% endblock content %}

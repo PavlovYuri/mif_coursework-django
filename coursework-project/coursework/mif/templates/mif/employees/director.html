@@ -1,0 +1,47 @@
+{% extends 'mif/base.html' %}
+{% load static %}
+
+{% block links %}
+
+{% endblock links %}
+
+{% block title %}
+    <title>Директор</title>
+{% endblock title %}
+
+{% block content %}
+    <main>
+        <div id="sub-main">
+            <h1 id="h1-director">Директор</h1>
+            <div id="logoutuser">
+                <form id="logoutuser-form" method="POST" action="{% url 'logoutuser' %}">
+                    {% csrf_token %}
+                    <button id="logoutuser-btn" type="submits">Выйти</button>
+                </form>
+            </div>
+            <div id="current-net-asset-value">Текущая стоимость чистых активов = {{ fin_struct.current_net_asset_value }}</div>
+            <div id="current-value-share">Текущая стоимость пая = {{ fin_struct.current_value_share }}</div>
+            <div id="budget">Бюджет = {{ fin_struct.budget }}</div>
+            <div id="all-shares">Всего паёв: {{ fin_struct.all_shares }}</div>
+            <div id="shares-left">Осталось паёв: {{ fin_struct.shares_left }}</div>
+            <div id="reports">
+                <table id="table-reports">
+                    <tr id="head-tr-table-reports">
+                        <th class="th-reports">От кого</th>
+                        <th class="th-reports">Файл отчёта</th>
+                        <th class="th-reports">Дата создания</th>
+                        <th class="th-reports">Просмотреть</th>
+                    </tr>
+                    {% for report in reports %}
+                        <tr class="tr-reports">
+                            <td class="td-reports">{{ report.employee }}</td>
+                            <td class="td-reports">{{ report.report }}</td>
+                            <td class="td-reports">{{ report.date }}</td>
+                            <td class="td-reports"><button id="view-pdf-btn"><a id="view-pdf-a" href='view_pdf/{{ report.id }}/'>Просмотреть</a></button></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

@@ -1,0 +1,14 @@
+#common-expenses-income {
+    display: flex;
+    justify-content: center;
+}
+
+#div-budget {
+    text-align: center;
+}
+
+#income-calculation {
+    display: flex;
+    justify-content: center;
+}
+

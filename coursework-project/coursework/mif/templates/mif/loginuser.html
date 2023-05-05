@@ -1,0 +1,39 @@
+{% extends 'mif/base.html' %}
+{% load static %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/loginuser.css' %}">
+{% endblock links %}
+
+{% block title %}
+    <title>Вход</title>
+{% endblock title %}
+
+{% block content %}
+    <main>
+        <div id="sub-main">
+            <h1 id="h1-loginuser">Вход</h1>
+            <div class="form-container">
+                <div class="form-container">
+                    <form method="POST" id="loginuser-form">
+                        {% csrf_token %}
+                        <h3 id="h3-loginuser">Введите ваши данные</h3>
+                        <div id="usernameForm" class="form-cell">
+                            <div id="username-label">Имя аккаунта:</div>
+                            <div id="div-username">{{ form.username }}</div> 
+                            <div id="username-description" class="description"></div>
+                        </div>
+                        <div id="passwordForm" class="form-cell">
+                            <div id="password-label">Пароль:</div>
+                            <div id="div-password">{{ form.password }}</div>
+                            <div id="password-description" class="description"></div>
+                        </div>
+                        <div id="div-login-button" class="form-cell">
+                            <button id="login-button" type="submit">Войти</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
