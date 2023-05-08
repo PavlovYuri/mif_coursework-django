@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile, EmployeeProfile, FinDistribution, Report
 from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 from .employee_functions.employee_functions import *
 
 def main(request):
@@ -46,29 +47,55 @@ def loginuser(request):
 @login_required
 def currentuser(request):
     if request.method == 'POST':
-        if request.POST['username'] != '':
-            request.user.username = request.POST['username']
-        elif request.POST['first_name'] != '':
-            request.user.first_name = request.POST['first_name']
-        elif request.POST['last_name'] != '':
-            request.user.last_name = request.POST['last_name']
-        elif request.POST['email'] != '':
-            request.user.email = request.POST['email']
-        elif request.POST['phone_number'] != '':
-            request.user.userprofile.phone_number = request.POST['phone_number']
-        elif request.POST['password'] != '':
-            request.user.password = request.POST['password']
-            request.user.set_password(request.user.password)
-            login(request, request.user)
-        else: 
-            return redirect('currentuser')
-        request.user.save()
-        request.user.userprofile.save()
-        return redirect('currentuser') 
+        if 'approval' in request.POST:
+            if request.POST['approval'] == 'on':
+                request.user.userprofile.opened_personal_account = True
+                request.user.userprofile.save()
+                return redirect('currentuser')
+        else:
+            if 'username' in request.POST and request.POST['username'] != '':
+                request.user.username = request.POST['username']
+            elif 'first_name' in request.POST and request.POST['first_name'] != '':
+                request.user.first_name = request.POST['first_name']
+            elif 'last_name' in request.POST and request.POST['last_name'] != '':
+                request.user.last_name = request.POST['last_name']
+            elif 'email' in request.POST and request.POST['email'] != '':
+                request.user.email = request.POST['email']
+            elif 'phone_number' in request.POST and request.POST['phone_number'] != '':
+                request.user.userprofile.phone_number = request.POST['phone_number']
+            elif 'password' in request.POST and request.POST['password'] != '':
+                request.user.password = request.POST['password']
+                request.user.set_password(request.user.password)
+                login(request, request.user)
+            else: 
+                return redirect('currentuser')
+            request.user.save()
+            request.user.userprofile.save()
+            return redirect('currentuser') 
     else:    
-        user_profile = UserProfile.objects.get(user_id=request.user.id)
         calculate_current_client_income(request.user)
-    return render(request, 'mif/currentuser.html', {'user_profile': user_profile})
+        user_profile = UserProfile.objects.get(user_id=request.user.id)
+        current_share = round(user_profile.share, 6)
+        current_balance = round(user_profile.current_balance, 6)
+    return render(request, 'mif/currentuser.html', {'user_profile': user_profile, 'current_share': current_share, 'current_balance': current_balance})
+
+@login_required
+def invest(request):
+    if request.method == 'POST':
+        fin_struct = FinDistribution.objects.get(id=1)
+        request.user.userprofile.share += int(request.POST['number_shares']) / fin_struct.all_shares
+        request.user.userprofile.recent_purchase = int(request.POST['number_shares'])
+        request.user.userprofile.is_processed = False
+        request.user.userprofile.save()
+        fin_struct.current_net_asset_value += int(request.POST['number_shares']) * fin_struct.current_value_share
+        fin_struct.budget += int(request.POST['number_shares']) * fin_struct.current_value_share
+        fin_struct.save()
+        calculate_share()
+        return redirect('currentuser')
+    else:
+        calculate_remaining_number_shares()
+        fin_struct = FinDistribution.objects.get(id=1)
+    return render(request, "mif/invest.html", {'fin_struct': fin_struct})
 
 @login_required
 def logoutuser(request):
@@ -119,10 +146,29 @@ def manager(request):
         elif ('employee' in request.POST) and ('report' in request.FILES) and request.POST['employee'] != '':
             report = Report(employee=request.POST['employee'], report=request.FILES['report'])
             report.save()
+        else:
+            amount = float(request.POST['share_price']) * int(request.POST['number_shares'])
+            fin_struct = FinDistribution.objects.get(id=1)
+            depository_instance = DepositoryInstance(stock_company=request.POST['stock_company'], share_price=request.POST['share_price'], number_shares=request.POST['number_shares'], status=request.POST['status'], amount=amount, datetime=request.POST['datetime'])
+            depository_instance.save()
+            try:
+                stock_storage_obj = StockStorage.objects.get(stock_company=request.POST['stock_company'])
+                if request.POST['status'] == 'покупка':
+                    stock_storage_obj.number_shares += int(request.POST['number_shares'])
+                else:
+                    stock_storage_obj.number_shares -= int(request.POST['number_shares'])
+                    stock_storage_obj.save()
+                    calculate_share_in_portfolio()
+            except ObjectDoesNotExist:
+                stock_storage_obj = StockStorage(stock_company=request.POST['stock_company'], number_shares=request.POST['number_shares'], share_in_portfolio=0)
+                stock_storage_obj.save()
+                calculate_share_in_portfolio()
         return redirect('manager')
     else:
+        fin_struct = FinDistribution.objects.get(id=1)
         plan_objects = get_analytical_plan()
-    return render(request, 'mif/employees/manager.html', {'plan_objects': plan_objects})
+        securities_portfolio = StockStorage.objects.all().order_by('-share_in_portfolio')
+    return render(request, 'mif/employees/manager.html', {'fin_struct': fin_struct, 'plan_objects': plan_objects, 'securities_portfolio': securities_portfolio})
 
 @login_required
 def analyst(request):
@@ -137,7 +183,6 @@ def analyst(request):
 
 @login_required
 def director(request):
-    calculate_remaining_number_shares()
     fin_struct = FinDistribution.objects.get(id=1)
     reports = Report.objects.all()
     return render(request, 'mif/employees/director.html', {'fin_struct': fin_struct, 'reports': reports})

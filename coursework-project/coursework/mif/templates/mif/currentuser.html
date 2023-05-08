@@ -67,25 +67,44 @@
                 </div>
                 <div id="financial-information">
                     <div id="personal-account">
-                        <button id="personal-account-btn"><a id="personal-account-a" href="#">Открыть лицевой счёт</a></button>
+                            {% if user_profile.opened_personal_account == False %}
+                                <form method="POST" id="personal-account-form">  
+                                    {% csrf_token %}
+                                    <div id="p-personal-account">Согласны ли вы открыть лицевой счёт?<input id="personal-account-input" type="checkbox" name="approval"></div>
+                                    <button id="personal-account-btn" type="submit">Открыть лицевой счёт</button>
+                                </form>  
+                            {% else %}
+                                <div>Вы имеете лицевой счёт</div>
+                            {% endif %}
+                    </div>
+                    <div id="invest">
+                        <button id="invest-button">
+                            {% if user_profile.opened_personal_account == True %}
+                                <a id="invest-approval-a" href="{% url 'invest' %}">Инвестировать</a>
+                            {% else %}
+                                <a id="invest-a" href="{% url 'currentuser' %}">Инвестировать</a>
+                            {% endif %}
+                        </button>
                     </div>
                     <div class="client-income">
-                        <div id="share">Ваша доля в фонде = {{ user_profile.share }}</div>
+                        <div id="share">Ваша доля в фонде = {{ current_share }}</div>
                     </div>
                     <div class="client-income">
-                        <div id="current-balance">Ваш текущий баланс = {{ user_profile.current_balance }}</div>
+                        <div id="current-balance">Ваш текущий баланс = {{ current_balance }}</div>
                     </div>
                 </div>
             </div>
         {% else %}
-            <h1 id="Вы не зарегистрированы!"></h1>
-            <div id="signup-login-buttons">
-                <button id="signup-button">
-                    <a id="signup" href="{% url 'signupuser' %}">Зарегистрироваться</a>
-                </button>
-                <button id="login-button">
-                    <a id="login" href="{% url 'loginuser' %}">Войти</a>
-                </button>
+            <div id="sub-main">
+                <h1 id="Вы не зарегистрированы!"></h1>
+                <div id="signup-login-buttons">
+                    <button id="signup-button">
+                        <a id="signup" href="{% url 'signupuser' %}">Зарегистрироваться</a>
+                    </button>
+                    <button id="login-button">
+                        <a id="login" href="{% url 'loginuser' %}">Войти</a>
+                    </button>
+                </div>
             </div>
         {% endif %}
     </main>

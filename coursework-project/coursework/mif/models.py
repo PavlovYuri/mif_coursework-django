@@ -7,6 +7,8 @@ class UserProfile(models.Model):
     share = models.FloatField(null=True, blank=True)
     current_balance = models.FloatField(null=True, blank=True)
     bank_card_number = models.CharField(max_length=50, null=True, blank=True)
+    opened_personal_account = models.BooleanField(default=False)
+    recent_purchase = models.IntegerField(null=True)
     is_processed = models.BooleanField(default=False)
     
 class EmployeeProfile(models.Model):
@@ -29,13 +31,18 @@ class FinDistribution(models.Model):
     shares_left = models.IntegerField(null=True)
 
 class DepositoryInstance(models.Model):
-    join_stock_company = models.CharField(max_length=500, null=True)
+    stock_company = models.CharField(max_length=500, null=True)
     share_price = models.FloatField(null=True)
     number_shares = models.IntegerField(null=True)
     status = models.CharField(max_length=20, null=True)
     amount = models.FloatField(null=True, blank=True)
     datetime = models.DateTimeField(null=True)
     is_processed = models.BooleanField(default=False)
+
+class StockStorage(models.Model):
+    stock_company = models.CharField(max_length=500, null=True)
+    number_shares = models.IntegerField(null=True)
+    share_in_portfolio = models.FloatField(null=True)
 
 class OtherExpense(models.Model):
     name_expense = models.CharField(max_length=300, null=True)
@@ -69,3 +76,5 @@ class ValueShare(models.Model):
 class NetAssetValue(models.Model):
     net_asset_value = models.FloatField(null=True)
     date = models.DateField(null=True)
+
+

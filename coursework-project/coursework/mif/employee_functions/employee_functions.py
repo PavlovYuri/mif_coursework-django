@@ -31,9 +31,11 @@ def get_list_income_expenses():
             entry.is_processed = True
             entry.save()
             if entry.status == 'покупка': 
-                fin_struct.budget -= (entry.amount)
+                fin_struct.current_net_asset_value += entry.amount
+                fin_struct.budget -= entry.amount
             else:
-                fin_struct.budget += (entry.amount)
+                fin_struct.current_net_asset_value -= entry.amount
+                fin_struct.budget += entry.amount
 
     for entry in other_expenses:
         if entry.is_processed == False:
@@ -131,11 +133,21 @@ def calculate_current_client_income(user):
 
 def calculate_remaining_number_shares():
     fin_struct = FinDistribution.objects.get(id=1)
-    clients = UserProfile.objects.exclude(share=0) & UserProfile.objects.exclude(is_processed=True)
+    clients = UserProfile.objects.exclude(share=0) & UserProfile.objects.exclude(is_processed=True) & UserProfile.objects.exclude(recent_purchase=None)
     
     for client in clients:
-        fin_struct.shares_left = fin_struct.shares_left - client.share * fin_struct.all_shares
-        client.is_processed = True
+        fin_struct.shares_left -= client.recent_purchase
         client.save()
 
     fin_struct.save()    
+
+def calculate_share_in_portfolio():
+    share_objects = StockStorage.objects.all()
+    all_shares_in_portfolio = 0
+
+    for share_object in share_objects:
+        all_shares_in_portfolio += share_object.number_shares
+
+    for share_object in share_objects:
+        share_object.share_in_portfolio = share_object.number_shares / all_shares_in_portfolio
+        share_object.save()

@@ -34,4 +34,5 @@ urlpatterns = [
     path("director/", views.director, name="director"),
 
     path("director/view_pdf/<int:report_id>/", views.view_pdf, name='view_pdf'),
+    path("currentuser/invest/", views.invest, name="invest"),
 ]
