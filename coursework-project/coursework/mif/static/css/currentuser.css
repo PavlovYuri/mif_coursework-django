@@ -1,4 +1,33 @@
-#user-data-and-logoutuser {
-    display: flex;
-    justify-content: center;
+main {
+    margin: 0px 100px;
+}
+
+.currentuser-container {
+    margin: 50px 0px;
+}
+
+#user-data-buttons {
+    margin-top: 20px;
+}
+
+.th-user-data {
+    padding: 20px;
+}
+
+
+.td-user-data {
+    padding: 20px;
+}
+
+.input-user-data {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#invest {
+    margin-left: 0px;
+}
+
+.div-currentuser {
+    margin: 20px;
 }

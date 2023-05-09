@@ -1,0 +1,17 @@
+main {
+    margin: 0px 100px;
+}
+
+
+#div-invest-form {
+    margin-left: 0px;
+}
+
+.div-invest {
+    margin: 20px;
+}
+
+#number-shares-input {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}

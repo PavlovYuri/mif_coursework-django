@@ -16,12 +16,12 @@
             <div id="logoutuser">
                 <form id="logoutuser-form" method="POST" action="{% url 'logoutuser' %}">
                     {% csrf_token %}
-                    <button id="logoutuser-btn" type="submits">Выйти</button>
+                    <button id="logoutuser-btn" class="btn-exit" type="submits">Выйти</button>
                 </form>
             </div>
             <div id="analytical-plan-and-broker-asset-and-securities-portfolio">
                 <div class="analytical-plan">
-                    <h3 class="h3-analytical-plan">Аналитический план</h3>
+                    <h3 id="h3-analytical-plan">Аналитический план</h3>
                     <table id="table-analytical-plan">
                         <tr id="head-tr">
                             <th class="th-analytical-plan">Название объекта купли-продажи</th>
@@ -40,15 +40,22 @@
                             </tr>
                         {% endfor %}
                     </table>
-                    <form method="POST" id="complete-obj-form">
-                        {% csrf_token %}
-                        <div id="token-input-label">
-                            <input id="token-input" name="token" size="30">
-                        </div>
-                        <button type="submit" id="complete-obj-btn">Завершить задание</button>
-                    </form>
+                    <div id="complete-task">
+                        <h3 id="h3-complete-task">Запись выполненного задания</h3>
+                        <form method="POST" id="complete-obj-form">
+                            {% csrf_token %}
+                            <div id="token-input-label" class="div-complete-task">
+                                <p id="token-label">Введите токен задания:</p>
+                                <input id="token-input" name="token" size="30" required>
+                            </div>
+                            <div id="div-complete-task-btn" class="div-complete-task">
+                                <button type="submit" id="complete-obj-btn" class="btn">Завершить задание</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <div id="securities-portfolio">
+                    <h3 id="h3-securities-portfolio">Состав фонда</h3>
                     <table id="securities-portfolio-table">
                         <tr id="head-table-securrities-portfolio">
                             <th class="th-securities-portfolio">Компания</th>
@@ -65,47 +72,60 @@
                     </table>
                 </div>
                 <div id="broker-asset">
-                    <div id="current-budget">Текущий бюджет = {{ fin_struct.budget }}</div>
-                    <div id="current-net-asset-value">Текущая стоимость чистых активов = {{ fin_struct.current_net_asset_value }}</div>
-                    <button id="broker-asset-btn"><a id="broker-asset-link" href="#">Перейти к брокеру</a></button>
+                    <h3 id="h3-broker-asset">Перейти к брокеру</h3>
+                    <div id="current-budget" class="div-broker-asset"><strong>Текущий бюджет</strong> = {{ fin_struct.budget }}</div>
+                    <div id="current-net-asset-value" class="div-broker-asset"><strong>Текущая стоимость чистых активов</strong> = {{ fin_struct.current_net_asset_value }}</div>
+                    <div id="div-broker-asset-form" class="div-broker-asset">
+                        <form action="#">
+                            <button id="broker-asset-btn" class="btn">Перейти к брокеру</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div id="record-deal">
-                <form method="POST" id="record-deal-form">
-                    {% csrf_token %}
-                    <h3 id="h3-record-deal">Запись сделки</h3>
-                    <div class="div-record-deal">
-                        <div class="record-deal-label">Название компании:</div>
-                        <input class="record-deal-input" type="text" name="stock_company">
-                    </div>
-                    <div class="div-record-deal">
-                        <div class="record-deal-label">Стоимость акции:</div>
-                        <input class="record-deal-input" type="text" name="share_price">
-                    </div>
-                    <div class="div-record-deal">
-                        <div class="record-deal-label">Число акций:</div>
-                        <input class="record-deal-input" type="text" name="number_shares">
-                    </div>
-                    <div class="div-record-deal">
-                        <div class="record-deal-label">Статус операции:</div>
-                        <input class="record-deal-input" type="text" name="status">
-                    </div>
-                    <div class="div-record-deal">
-                        <div class="record-deal-label">Дата и время:</div>
-                        <input class="record-deal-input" type="text" name="datetime">
-                    </div>
-                    <button id="record-deal-btn" type="submit">Сохранить сделку</button>
-                </form>
+            <hr>
+            <h2 id="h2-record-deal">Запись сделки</h2>
+            <div class="record-deal">
+                <div class="record-deal">
+                    <form method="POST" id="record-deal-form">
+                        {% csrf_token %}
+                        <div class="div-record-deal">
+                            <div class="record-deal-label">Название компании:</div>
+                            <input class="record-deal-input" type="text" name="stock_company" required>
+                        </div>
+                        <div class="div-record-deal">
+                            <div class="record-deal-label">Стоимость акции:</div>
+                            <input class="record-deal-input" type="text" name="share_price" required>
+                        </div>
+                        <div class="div-record-deal">
+                            <div class="record-deal-label">Число акций:</div>
+                            <input class="record-deal-input" type="text" name="number_shares" required>
+                        </div>
+                        <div class="div-record-deal">
+                            <div class="record-deal-label">Статус операции:</div>
+                            <input class="record-deal-input" type="text" name="status" required>
+                        </div>
+                        <div class="div-record-deal">
+                            <div class="record-deal-label">Дата и время:</div>
+                            <input class="record-deal-input" type="text" name="datetime" required>
+                        </div>
+                        <div id="div-record-deal-btn">
+                            <button id="record-deal-btn" class="btn" type="submit">Сохранить сделку</button>
+                        </div>
+                    </form>
+                </div>
             </div>
+            <hr>
             <div id="sending-report">
+                <h2 id="h2-sending-report">Отправка отчёта</h2>
                 <form method="POST" enctype="multipart/form-data" id="sending-report-form">
                     {% csrf_token %}
-                    <h3 id="h3-sending-report">Отправка отчёта</h3>
                     <p>Наименование сотрудника:</p>
-                    <input id="employee" type="text" name="employee">
+                    <input id="employee-input" type="text" name="employee" required>
                     <p>Загрузить отчёт:</p>
-                    <input id="upload-file" type="file" name="report">
-                    <button id="sending-report-button" type="submit">Отправить отчёт</button>
+                    <input id="upload-file-input" type="file" name="report" required>
+                    <div id="div-sending-report-button">
+                        <button id="sending-report-button" class="btn" type="submit">Отправить отчёт</button>
+                    </div>
                 </form>
             </div>
         </div>

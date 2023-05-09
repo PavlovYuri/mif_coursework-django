@@ -16,12 +16,12 @@
             <div id="logoutuser">
                 <form id="logoutuser-form" method="POST" action="{% url 'logoutuser' %}">
                     {% csrf_token %}
-                    <button id="logoutuser-btn" type="submits">Выйти</button>
+                    <button id="logoutuser-btn" class="btn-exit" type="submits">Выйти</button>
                 </form>
             </div>
             <div id="analytical-plan">
                 <div class="sub-analytical-plan">
-                    <h3 class="h3-analytical-plan">Составление плана купли-продажи</h3>
+                    <h3 class="h3-analytical-plan">Составление плана<br>купли-продажи</h3>
                     <form method="POST" id="analytical-plan-form">
                         {% csrf_token %}
                         <div class="form-cell">
@@ -40,7 +40,9 @@
                             <div class="div-input-label">Назначенные дата и время:</div>
                             <input class="analytical-input" id="datetime" name="datetime">
                         </div>
-                        <button type="submit" id="analytical-plan-btn">Отправить план</button>
+                        <div id="div-analytical-plan-btn">
+                            <button type="submit" class="btn" id="analytical-plan-btn">Отправить план</button>
+                        </div>
                     </form>
                 </div>
                 <div class="sub-analytical-plan">
@@ -67,25 +69,30 @@
                     </table>
                 </div>
             </div>
+            <hr>
             <div id="financial-news">
-                <h3>Новости из мира финансов</h3>
-                <div class="financial-news-date">{{ date1.date }}</div>
+                <h2 id="h2-financial-news">Новости из мира финансов</h2>
+                <div class="financial-news-date"><strong>{{ date1.date }}</strong></div>
                 {% for article in articles_arr_1 %}
-                    <div class="financial-news-cell">{{ article.time }}<a href="https://1prime.ru/{{ article.href }}">{{ article.h2 }}</a></div>
+                    <div class="financial-news-cell">{{ article.time }}<a class="financial-news-a" href="https://1prime.ru/{{ article.href }}"> {{ article.h2 }}</a></div>
                 {% endfor %}
-                <div class="financial-news-date">{{ date2.date }}</div>
+                <div class="financial-news-date"><strong>{{ date2.date }}</strong></div>
                 {% for article in articles_arr_2 %}
-                    <div class="financial-news-cell">{{ article.time }}<a href="https://1prime.ru/{{ article.href }}">{{ article.h2 }}</a></div>
+                    <div class="financial-news-cell">{{ article.time }}<a class="financial-news-a" href="https://1prime.ru/{{ article.href }}"> {{ article.h2 }}</a></div>
                 {% endfor %}
             </div>
+            <hr>
             <div id="sending-report">
+                <h2 id="h2-sending-report">Отправка отчёта</h2>
                 <form method="POST" enctype="multipart/form-data" id="sending-report-form">
                     {% csrf_token %}
                     <p>Наименование сотрудника:</p>
-                    <input id="employee" type="text" name="employee">
+                    <input id="employee-input" type="text" name="employee" required>
                     <p>Загрузить отчёт:</p>
-                    <input id="upload-file" type="file" name="report">
-                    <button id="sending-report-button" type="submit">Отправить отчёт</button>
+                    <input id="upload-file-input" type="file" name="report" required>
+                    <div id="div-sending-report-button">
+                        <button id="sending-report-button" class="btn" type="submit">Отправить отчёт</button>
+                    </div>
                 </form>
             </div>
         </div>

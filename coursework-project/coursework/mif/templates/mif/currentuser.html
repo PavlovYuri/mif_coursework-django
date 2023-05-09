@@ -13,8 +13,14 @@
     <main>
         {% if user.is_authenticated %}
             <div id="user-data-and-logoutuser">
-                <div id="user-data">
+                <div id="user-data" class="currentuser-container">
                     <h1 id="h1-username">{{ user.username }}</h1>
+                    <div id="logoutuser">
+                        <form id="logoutuser-form" method="POST" action="{% url 'logoutuser' %}">
+                            {% csrf_token %}
+                            <button id="logoutuser-btn" class="btn-exit" type="submits">Выйти</button>
+                        </form>
+                    </div>
                     <h3 id="h3-user-data">Личные данные</h3>
                     <form id="form-user-data" method="POST">
                         {% csrf_token %}
@@ -25,71 +31,73 @@
                                 <th class="th-user-data">Новые данные</th>
                             </tr>
                             <tr class="tr-user-data">
-                                <td class="td-user-data">Имя аккаунта</td>
+                                <td class="td-user-data"><strong>Имя аккаунта</strong></td>
                                 <td class="td-user-data">{{ user.username }}</td>
                                 <td class="td-user-data"><input class="input-user-data" type="text" name="username"></td>
                             </tr>
                             <tr class="tr-user-data">
-                                <td class="td-user-data">Имя</td>
+                                <td class="td-user-data"><strong>Имя</strong></td>
                                 <td class="td-user-data">{{ user.first_name }}</td>
                                 <td class="td-user-data"><input class="input-user-data" type="text" name="first_name"></td>
                             </tr>
                             <tr class="tr-user-data">
-                                <td class="td-user-data">Фамилия</td>
+                                <td class="td-user-data"><strong>Фамилия</strong></td>
                                 <td class="td-user-data">{{ user.last_name }}</td>
                                 <td class="td-user-data"><input class="input-user-data" type="text" name="last_name"></td>
                             </tr>
                             <tr class="tr-user-data">
-                                <td class="td-user-data">Электронная почта</td>
+                                <td class="td-user-data"><strong>Электронная почта</strong></td>
                                 <td class="td-user-data">{{ user.email }}</td>
                                 <td class="td-user-data"><input class="input-user-data" type="text" name="email"></td>
                             </tr>
                             <tr class="tr-user-data">
-                                <td class="td-user-data">Номер телефона</td>
+                                <td class="td-user-data"><strong>Номер телефона</strong></td>
                                 <td class="td-user-data">{{ user_profile.phone_number }}</td>
                                 <td class="td-user-data"><input class="input-user-data" type="text" name="phone_number"></td>
                             </tr>
                             <tr class="tr-user-data">
-                                <td class="td-user-data">Пароль</td>
+                                <td class="td-user-data"><strong>Пароль</strong></td>
                                 <td class="td-user-data">{{ user.password }}</td>
                                 <td class="td-user-data"><input class="input-user-data" type="text" name="password"></td>
                             </tr>
                         </table>
-                        <button id="change-user-data-btn">Изменить</button>
-                        <button id="save-changes-user-data" type="submit">Сохранить изменения</button>
+                        <div id="user-data-buttons">
+                            <button id="change-user-data-btn" class="btn">Изменить</button>
+                            <button id="save-changes-user-data" class="btn" type="submit">Сохранить изменения</button>
+                        </div>
                     </form>
                 </div>
-                <div id="logoutuser">
-                    <form id="logoutuser-form" method="POST" action="{% url 'logoutuser' %}">
-                        {% csrf_token %}
-                        <button id="logoutuser-btn" type="submits">Выйти</button>
-                    </form>
-                </div>
-                <div id="financial-information">
+                <div id="financial-information" class="currentuser-container">
                     <div id="personal-account">
                             {% if user_profile.opened_personal_account == False %}
                                 <form method="POST" id="personal-account-form">  
                                     {% csrf_token %}
                                     <div id="p-personal-account">Согласны ли вы открыть лицевой счёт?<input id="personal-account-input" type="checkbox" name="approval"></div>
-                                    <button id="personal-account-btn" type="submit">Открыть лицевой счёт</button>
+                                    <button id="personal-account-btn" type="submit" class="btn">Открыть лицевой счёт</button>
                                 </form>  
                             {% else %}
-                                <div>Вы имеете лицевой счёт</div>
+                                <div><strong>Вы имеете лицевой счёт</strong></div>
                             {% endif %}
                     </div>
-                    <div id="invest">
-                        <button id="invest-button">
-                            {% if user_profile.opened_personal_account == True %}
-                                <a id="invest-approval-a" href="{% url 'invest' %}">Инвестировать</a>
-                            {% else %}
-                                <a id="invest-a" href="{% url 'currentuser' %}">Инвестировать</a>
-                            {% endif %}
-                        </button>
+                    <div id="invest" class="div-currentuser">
+                        {% if user_profile.opened_personal_account == True %}
+                            <div id="div-invest-approval">
+                                <form action="{% url 'invest' %}">
+                                    <button id="invest-approval" class="btn">Инвестировать</button>
+                                </form>
+                            </div>
+                        {% else %}
+                            <div id="div-invest-currentuser">
+                                <form action="{% url 'currentuser' %}">
+                                    <button id="invest-currentuser" class="btn">Инвестировать</button>
+                                </form>
+                            </div>
+                        {% endif %}
                     </div>
-                    <div class="client-income">
+                    <div class="client-income" class="div-currentuser">
                         <div id="share">Ваша доля в фонде = {{ current_share }}</div>
                     </div>
-                    <div class="client-income">
+                    <div class="client-income" class="div-currentuser">
                         <div id="current-balance">Ваш текущий баланс = {{ current_balance }}</div>
                     </div>
                 </div>
@@ -98,12 +106,12 @@
             <div id="sub-main">
                 <h1 id="Вы не зарегистрированы!"></h1>
                 <div id="signup-login-buttons">
-                    <button id="signup-button">
-                        <a id="signup" href="{% url 'signupuser' %}">Зарегистрироваться</a>
-                    </button>
-                    <button id="login-button">
-                        <a id="login" href="{% url 'loginuser' %}">Войти</a>
-                    </button>
+                    <form action="{% url 'signupuser' %}">
+                        <button id="signup-button" class="btn">Зарегистрироваться</button>
+                    </form>
+                    <form action="{% url 'loginuser' %}">
+                        <button id="login-button" class="btn">Войти</button>
+                    </form>
                 </div>
             </div>
         {% endif %}

@@ -1,4 +1,115 @@
+main {
+    margin: 0px 100px;
+}
+
 #analytical-plan-and-broker-asset-and-securities-portfolio {
     display: flex;
     justify-content: center;
+}
+
+#h3-analytical-plan {
+    text-align: center;
+}
+
+#table-analytical-plan {
+    text-align: center;
+    background-color: rgb(222, 222, 247);
+    border-radius: 10px;
+    margin: 50px;
+}
+
+.th-analytical-plan {
+    padding: 20px;
+}
+
+.td-analytical-plan {
+    padding: 20px;
+}
+
+#h3-securities-portfolio {
+    text-align: center;
+}
+
+#securities-portfolio-table {
+    text-align: center;
+    background-color: rgb(222, 222, 247);
+    border-radius: 10px;
+    margin: 50px;
+}
+
+.th-securities-portfolio {
+    padding: 20px;
+}
+
+.td-securities-portfolio {
+    padding: 20px;
+}
+
+#h3-broker-asset {
+    text-align: center;
+}
+
+#div-broker-asset-form {
+    text-align: center;
+}
+
+#current-budget {
+    margin-top: 70px;
+}
+
+.div-broker-asset {
+    margin: 20px 0px;
+}
+
+#complete-task {
+    text-align: center;
+}
+
+.div-complete-task {
+    margin: 20px;
+}
+
+#token-input {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#h2-record-deal {
+    text-align: center;
+}
+
+.record-deal {
+    display: flex;
+    justify-content: center;
+}
+
+#record-deal-form {
+    background-color: rgb(222, 222, 247);
+    border-radius: 20px;
+    text-align: center;
+    height: 45ex;
+    width: 28ex;
+    margin-bottom: 20px;
+}
+
+.div-record-deal {
+    padding: 10px;
+}
+
+.record-deal-input {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#sending-report {
+    padding-bottom: 50px;
+}
+
+#employee-input {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#div-sending-report-button {
+    margin-top: 22px;
 }

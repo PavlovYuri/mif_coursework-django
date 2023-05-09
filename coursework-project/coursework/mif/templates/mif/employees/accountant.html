@@ -16,77 +16,81 @@
             <div id="logoutuser">
                 <form id="logoutuser-form" method="POST" action="{% url 'logoutuser' %}">
                     {% csrf_token %}
-                    <button id="logoutuser-btn" type="submits">Выйти</button>
+                    <button id="logoutuser-btn" class="btn-exit" type="submits">Выйти</button>
                 </form>
             </div>
             <div id="div-current-value-share">
                 <h3 id="h3-current-value-share">Текущая стоимость пая:</h3>
                 <div id="div-value-share">
-                    {{ current_value_share }} {{ change }} %
+                    {{ current_value_share }} {% if change > 0 %}<span class="income-span">+{{ change }}%</span>{% else %}<span class="expence-span">{{ change }}%</span>{% endif %}
                 </div>
             </div>
-            <div id="common-expenses-income">
-                <div id="income-expenses-shares" class="div-income-expenses-table">
-                    <h3 class="h3-income-expenses">Купля-продажа акций</h3>
-                    <table class="table-income-expenses">
-                        <tr class="head-table-income-expenses">
-                            <th class="th-income-expenses">Название акционерного общества</th>
-                            <th class="th-income-expenses">Стоимость акции</th>
-                            <th class="th-income-expenses">Количество акций</th>
-                            <th class="th-income-expenses">Статус операции</th>
-                            <th class="th-income-expenses">Сумма</th>
-                            <th class="th-income-expenses">Дата и время</th>
-                        </tr>
-                        {% for entry in current_income_expenses_shares %}
-                            <tr class="tr-income-expenses">
-                                <td class="td-income-expenses">{{ entry.stock_company }}</td>
-                                <td class="td-income-expenses">{{ entry.share_price }}</td>
-                                <td class="td-income-expenses">{{ entry.number_shares }}</td>
-                                <td class="td-income-expenses">{{ entry.status }}</td>
-                                <td class="td-income-expenses">{% if entry.status == 'покупка' %}-{% else %}+{% endif %}{{ entry.amount }}</td>
-                                <td class="td-income-expenses">{{ entry.datetime }}</td>
+                <div id="div-purchase-shares">
+                    <div id="income-expenses-shares" class="div-income-expenses-table">
+                        <h3 class="h3-income-expenses">Купля-продажа акций</h3>
+                        <table class="table-income-expenses">
+                            <tr class="head-table-income-expenses">
+                                <th class="th-income-expenses">Название акционерного общества</th>
+                                <th class="th-income-expenses">Стоимость акции</th>
+                                <th class="th-income-expenses">Количество акций</th>
+                                <th class="th-income-expenses">Статус операции</th>
+                                <th class="th-income-expenses">Сумма</th>
+                                <th class="th-income-expenses">Дата и время</th>
                             </tr>
-                        {% endfor %}
-                    </table>
+                            {% for entry in current_income_expenses_shares %}
+                                <tr class="tr-income-expenses">
+                                    <td class="td-income-expenses">{{ entry.stock_company }}</td>
+                                    <td class="td-income-expenses">{{ entry.share_price }}</td>
+                                    <td class="td-income-expenses">{{ entry.number_shares }}</td>
+                                    <td class="td-income-expenses">{{ entry.status }}</td>
+                                    <td class="td-income-expenses">{% if entry.status == 'покупка' %}<span class="expence-span">-{{ entry.amount }}</span>{% else %}<span class="income-span">+{{ entry.amount }}</span>{% endif %}</td>
+                                    <td class="td-income-expenses">{{ entry.datetime }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
-                <div id="other-expenses" class="div-income-expanses-table">
-                    <h3 class="h3-income-expenses">Прочие расходы</h3> 
-                    <table class="table-income-expenses">
-                        <tr class="head-table-income-expenses">
-                            <th class="th-income-expenses">Название операции</th>
-                            <th class="th-income-expenses">Потраченная сумма</th>
-                            <th class="th-income-expenses">Дата</th>
-                        </tr>
-                        {% for entry in current_other_expenses %}
-                            <tr class="tr-income-expenses">
-                                <td class="td-income-expenses">{{ entry.name_expense }}</td>
-                                <td class="td-income-expenses">-{{ entry.amount_spent }}</td>
-                                <td class="td-income-expenses">{{ entry.date }}</td>
+                <hr>
+                <div id="common-expenses-income">
+                    <div id="other-expenses" class="div-income-expanses-table">
+                        <h3 class="h3-income-expenses">Прочие расходы</h3> 
+                        <table class="table-income-expenses">
+                            <tr class="head-table-income-expenses">
+                                <th class="th-income-expenses">Название операции</th>
+                                <th class="th-income-expenses">Потраченная сумма</th>
+                                <th class="th-income-expenses">Дата</th>
                             </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-                <div id="other-income" class="div-income-expanses-table">
-                    <h3 class="h3-income-expenses">Прочие доходы</h3>
-                    <table class="table-income-expenses">
-                        <tr class="head-table-income-expenses">
-                            <th class="th-income-expenses">Название операции</th>
-                            <th class="th-income-expenses">Полученная сумма</th>
-                            <th class="th-income-expenses">Дата</th>
-                        </tr>
-                        {% for entry in current_other_income %}
-                            <tr class="tr-income-expenses">
-                                <td class="td-income-expenses">{{ entry.name_income }}</td>
-                                <td class="td-income-expenses">+{{ entry.amount_received }}</td>
-                                <td class="td-income-expenses">{{ entry.date }}</td>
+                            {% for entry in current_other_expenses %}
+                                <tr class="tr-income-expenses">
+                                    <td class="td-income-expenses">{{ entry.name_expense }}</td>
+                                    <td class="td-income-expenses"><span class="expence-span">-{{ entry.amount_spent }}</span></td>
+                                    <td class="td-income-expenses">{{ entry.date }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div id="other-income" class="div-income-expanses-table">
+                        <h3 class="h3-income-expenses">Прочие доходы</h3>
+                        <table class="table-income-expenses">
+                            <tr class="head-table-income-expenses">
+                                <th class="th-income-expenses">Название операции</th>
+                                <th class="th-income-expenses">Полученная сумма</th>
+                                <th class="th-income-expenses">Дата</th>
                             </tr>
-                        {% endfor %}
-                    </table>
-                </div>       
-            </div>
+                            {% for entry in current_other_income %}
+                                <tr class="tr-income-expenses">
+                                    <td class="td-income-expenses">{{ entry.name_income }}</td>
+                                    <td class="td-income-expenses"><span class="income-span">+{{ entry.amount_received }}</span></td>
+                                    <td class="td-income-expenses">{{ entry.date }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>    
+                </div>  
             <div id="div-budget">
-                Текущий бюджет = {{ current_budget }}
+                <strong>Текущий бюджет</strong> = {{ current_budget }}
             </div>
+            <hr>
             <div id="income-calculation">
                 <div id="calculation-employee-salary">
                     <h3 class="h3-income-calculation">Зарплаты сотрудников</h3>
@@ -109,12 +113,12 @@
                         {% endfor %}
                     </table>
                     <div id="employee-expence">
-                        Сумма выплат сотрудникам = {{ employee_expense }}
-                    </div>
+                        <strong>Сумма выплат сотрудникам</strong> = <span class="expence-span">{{ employee_expense }}</span>
+                    </div> 
                 </div>
                 <div id="calculation-client-income">
                     <h3 class="h3-income-calculation">Текущий баланс клиентов</h3>
-                    <table class="head-table-income-calculation">
+                    <table class="table-income-calculation">
                         <tr class="head-table-income-calculation">
                             <th class="th-income-calculation">Имя</th>
                             <th class="th-income-calculation">Фамилия</th>
@@ -133,18 +137,22 @@
                         {% endfor %}
                     </table>
                     <div id="client-expence">
-                        Сумма выплат клиентам = {{ client_expense }}
+                        <strong>Сумма выплат клиентам</strong> = <span class="expence-span">{{ client_expense }}</span>
                     </div> 
                 </div>
             </div>
+            <hr>
             <div id="sending-report">
+                <h2 id="h2-sending-report">Отправка отчёта</h2>
                 <form method="POST" enctype="multipart/form-data" id="sending-report-form">
                     {% csrf_token %}
                     <p>Наименование сотрудника:</p>
-                    <input id="employee" type="text" name="employee">
+                    <input id="employee-input" type="text" name="employee" required>
                     <p>Загрузить отчёт:</p>
-                    <input id="upload-file" type="file" name="report">
-                    <button id="sending-report-button" type="submit">Отправить отчёт</button>
+                    <input id="upload-file-input" type="file" name="report" required>
+                    <div id="div-sending-report-button">
+                        <button id="sending-report-button" class="btn" type="submit">Отправить отчёт</button>
+                    </div>
                 </form>
             </div>
         </div>

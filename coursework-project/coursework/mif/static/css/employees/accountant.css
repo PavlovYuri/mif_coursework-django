@@ -1,3 +1,12 @@
+main {
+    margin: 0px 100px;
+}
+
+#div-purchase-shares {
+    display: flex;
+    justify-content: center;
+}
+
 #common-expenses-income {
     display: flex;
     justify-content: center;
@@ -12,3 +21,82 @@
     justify-content: center;
 }
 
+.h3-income-expenses {
+    text-align: center;
+}
+
+.table-income-expenses {
+    text-align: center;
+    margin: 50px;
+}
+
+#div-budget {
+    margin-bottom: 50px;
+}
+
+.table-income-expenses {
+    background-color: rgb(222, 222, 247);
+    border-radius: 10px;
+}
+
+.th-income-expenses {
+    padding: 20px;
+}
+
+.td-income-expenses {
+    padding: 20px;
+}
+
+.h3-income-calculation {
+    text-align: center;
+}
+
+.table-income-calculation {
+    text-align: center;
+    background-color: rgb(222, 222, 247);
+    border-radius: 10px;
+    margin: 50px;
+}
+
+.th-income-calculation {
+    padding: 20px;
+}
+
+
+.income-calculation {
+    padding: 20px;
+}
+
+#employee-expence {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#client-expence {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.expence-span {
+    color: rgb(185, 29, 29);
+    font-weight: 700;
+}
+
+.income-span {
+    color: rgb(7, 145, 14);
+    font-weight: 700;
+}
+
+#sending-report {
+    padding-bottom: 50px;
+}
+
+#employee-input {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#div-sending-report-button {
+    margin-top: 22px;
+}

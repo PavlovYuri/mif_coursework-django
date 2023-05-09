@@ -21,7 +21,7 @@
 #signupuser-form {
     background-color: white;
     border-radius: 20px;
-    height: 70ex;
+    height: 76ex;
     width: 35ex;
 }
 
@@ -29,6 +29,42 @@
     text-align: center;
 }
 
-.description {
-    height: 22px;
+#id_username {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
 }
+
+#id_first_name {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#id_last_name {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#id_email {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#id_phone_number {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#id_password {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#password2 {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+.description {
+    height: 30px;
+}
+

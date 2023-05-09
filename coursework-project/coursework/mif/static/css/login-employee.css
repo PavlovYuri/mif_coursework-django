@@ -17,6 +17,7 @@
     display: flex;
     justify-content: center;
     margin: 40px;
+    margin-top: 0px;
 }
 
 #login-employee-form {
@@ -28,6 +29,16 @@
 
 .form-cell {
     text-align: center;
+}
+
+#id_username {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#id_password {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
 }
 
 .description {

@@ -51,9 +51,9 @@
                         <a class="nav-link" href="#">Theme</a>
                     </li>
                     <li class="nav-item" id="form">
-                        <form class="search-box">
-                            <input class="search-txt" type="text" placeholder="Поиск">
-                            <a class="search-btn" href="#"><i class='fa fa-search' aria-hidden="true"></i></a>
+                        <form id="search-box" action="" method="get">
+                            <input id="search-txt" type="search" placeholder="Найти">
+                            <button id="search-btn" class="btn" type="submit">Поиск</button>
                         </form>
                     </li>
                 </ul>
@@ -67,10 +67,6 @@
         {% block content %}
 
         {% endblock content %}
-
-        <footer>
-
-        </footer>
 
         <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
         {% block scripts %}

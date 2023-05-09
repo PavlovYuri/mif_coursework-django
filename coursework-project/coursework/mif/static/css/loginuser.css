@@ -17,12 +17,13 @@
     display: flex;
     justify-content: center;
     margin: 40px;
+    margin-top: 0px;
 }
 
 #loginuser-form {
     background-color: white;
     width: 35ex;
-    height: 30ex;
+    height: 32ex;
     border-radius: 20px;
 }
 
@@ -30,6 +31,16 @@
     text-align: center;
 }
 
+#id_username {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#id_password {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
 .description {
-    height: 22px;
+    height: 30px;
 }

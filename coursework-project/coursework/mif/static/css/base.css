@@ -28,8 +28,8 @@ body {
     text-decoration: none;
 }
 
-.nav-item:hover {
-    background-color: rgb(205, 205, 231);
+.nav-link:hover {
+    color: rgb(63, 63, 241);
 }
 
 #logo:hover {
@@ -38,4 +38,67 @@ body {
 
 #form:hover {
     background-color: white;
+}
+
+#search-box {
+    border-radius: 5px;
+}
+
+#search-txt {
+    border: 2px solid rgb(63, 63, 241);
+    border-radius: 5px;
+}
+
+#search-btn {
+    width: 70px;
+    height: 22px;
+    font-size: 12px;
+}
+
+.btn {
+    width: 190px;
+    height: 40px;
+    background-color: rgb(63, 63, 241);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.btn:hover {
+    background-color: white;
+    color: rgb(63, 63, 241);
+    border: 3px solid;
+    border-color:rgb(63, 63, 241);
+}
+
+.btn:focus {
+    opacity: .9;
+}
+
+.btn-exit {
+    width: 190px;
+    height: 40px;
+    background-color: rgb(185, 29, 29);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.btn-exit:hover {
+    background-color: white;
+    color: rgb(185, 29, 29);
+    border: 3px solid;
+    border-color:rgb(185, 29, 29);
+}
+
+.btn-exit:focus {
+    opacity: .9;
 }

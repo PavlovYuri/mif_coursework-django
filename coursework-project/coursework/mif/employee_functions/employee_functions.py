@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 def calculate_share():
     fin_struct = FinDistribution.objects.get(id=1)
-    new_current_value_share = fin_struct.current_net_asset_value / fin_struct.all_shares
+    new_current_value_share = round(fin_struct.current_net_asset_value / fin_struct.all_shares, 2)
     date = datetime.now().date()
     valueshare_obj, created = ValueShare.objects.get_or_create(value_share=fin_struct.current_value_share, date=date)
     if created == False:
@@ -15,7 +15,8 @@ def calculate_share():
         valueshare_obj.save()
     fin_struct.current_value_share = new_current_value_share
     fin_struct.save()
-    change = ((new_current_value_share / fin_struct.current_value_share) - 1) * 100
+    start_value_share = ValueShare.objects.get(id=1)
+    change = round(((new_current_value_share / start_value_share.value_share) - 1) * 100, 2)
     
     return [new_current_value_share, change]
 
@@ -27,7 +28,7 @@ def get_list_income_expenses():
 
     for entry in income_expenses_shares:
         if entry.is_processed == False: 
-            entry.amount = entry.share_price * entry.number_shares
+            entry.amount = round(entry.share_price * entry.number_shares, 2)
             entry.is_processed = True
             entry.save()
             if entry.status == 'покупка': 
@@ -49,7 +50,7 @@ def get_list_income_expenses():
             entry.is_processed = True
             entry.save()
 
-    current_budget = fin_struct.budget
+    current_budget = round(fin_struct.budget, 2)
     fin_struct.save()
 
     return [income_expenses_shares, other_expenses, other_income, current_budget]
@@ -69,10 +70,10 @@ def calculate_incomes_clients():
     client_expense = 0
 
     for client in clients:
-        client.current_balance = client.share * fin_struct.current_net_asset_value
+        client.current_balance = round(client.share * fin_struct.current_net_asset_value, 2)
         client_expense += client.current_balance
 
-    return [clients, client_expense]
+    return [clients, round(client_expense)]
 
 def get_analytical_plan():
     plan_objects = AnalyticalPlan.objects.exclude(is_completed__exact=True)
@@ -128,7 +129,7 @@ def parse_news():
 def calculate_current_client_income(user):
     client = UserProfile.objects.get(user_id=user.id)
     fin_struct = FinDistribution.objects.get(id=1)
-    client.current_balance = client.share * fin_struct.current_net_asset_value
+    client.current_balance = round(client.share * fin_struct.current_net_asset_value, 2)
     client.save()
 
 def calculate_remaining_number_shares():
@@ -137,6 +138,7 @@ def calculate_remaining_number_shares():
     
     for client in clients:
         fin_struct.shares_left -= client.recent_purchase
+        client.is_processed = True
         client.save()
 
     fin_struct.save()    
@@ -149,5 +151,5 @@ def calculate_share_in_portfolio():
         all_shares_in_portfolio += share_object.number_shares
 
     for share_object in share_objects:
-        share_object.share_in_portfolio = share_object.number_shares / all_shares_in_portfolio
+        share_object.share_in_portfolio = round(share_object.number_shares / all_shares_in_portfolio, 2)
         share_object.save()

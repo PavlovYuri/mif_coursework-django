@@ -11,30 +11,41 @@
 
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <div id="invest">
-            <div id="current-value-share">Текущая стоимость пая = {{ fin_struct.current_value_share }}</div>
-            <div id="shares-left">Осталось паёв: {{ fin_struct.shares_left }}</div>
-            <form method="POST" id="invest-form">
-                {% csrf_token %}
-                <div id="choosing-number-shares">Выберите количество паёв:</div>
-                <input id="number-shares-input" type="text" name="number_shares">
-                <div id="your-share">Ваша доля составляет:</div>
-                <div id="your-investment">Ваша инвестиция составляет:</div>
-                <button id="invest-btn" type="submit">Инвестировать</button>
-            </form>
-        </div>
-    {% else %}
-        <div id="sub-main">
-            <h1 id="Вы не зарегистрированы!"></h1>
-            <div id="signup-login-buttons">
-                <button id="signup-button">
-                    <a id="signup" href="{% url 'signupuser' %}">Зарегистрироваться</a>
-                </button>
-                <button id="login-button">
-                    <a id="login" href="{% url 'loginuser' %}">Войти</a>
-                </button>
+    <main>
+        {% if user.is_authenticated %}
+            <div id="invest">
+                <div id="div-h1-invest" class="div-invest">
+                    <h1 id="h1-invest">Инвестирование</h1>
+                </div>
+                <div id="current-value-share" class="div-invest">Текущая стоимость пая = {{ fin_struct.current_value_share }}</div>
+                <div id="shares-left" class="div-invest">Осталось паёв: {{ fin_struct.shares_left }}</div>
+                <div id="div-invest-form" class="div-invest">
+                    <form method="POST" id="invest-form">
+                        {% csrf_token %}
+                        <div id="choosing-number-shares" class="div-invest">Выберите количество паёв:</div>
+                        <div id="div-invest-input" class="div-invest">
+                            <input id="number-shares-input" type="text" name="number_shares" required>
+                        </div>
+                        <div id="your-share" class="div-invest">Ваша доля составляет:</div>
+                        <div id="your-investment" class="div-invest">Ваша инвестиция составляет:</div>
+                        <div id="div-invest-button" class="div-invest">
+                            <button id="invest-btn" class="btn" type="submit">Инвестировать</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% else %}
+            <div id="sub-main">
+                <h1 id="Вы не зарегистрированы!"></h1>
+                <div id="signup-login-buttons">
+                    <form action="{% url 'signupuser' %}">
+                        <button id="signup-button" class="btn">Зарегистрироваться</button>
+                    </form>
+                    <form action="{% url 'loginuser' %}">
+                        <button id="login-button" class="btn">Войти</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </main>
 {% endblock content %}

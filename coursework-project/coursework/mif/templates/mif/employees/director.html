@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block links %}
-
+    <link rel="stylesheet" href="{% static 'css/employees/director.css' %}">
 {% endblock links %}
 
 {% block title %}
@@ -16,15 +16,59 @@
             <div id="logoutuser">
                 <form id="logoutuser-form" method="POST" action="{% url 'logoutuser' %}">
                     {% csrf_token %}
-                    <button id="logoutuser-btn" type="submits">Выйти</button>
+                    <button id="logoutuser-btn" class="btn-exit" type="submits">Выйти</button>
                 </form>
             </div>
-            <div id="current-net-asset-value">Текущая стоимость чистых активов = {{ fin_struct.current_net_asset_value }}</div>
-            <div id="current-value-share">Текущая стоимость пая = {{ fin_struct.current_value_share }}</div>
-            <div id="budget">Бюджет = {{ fin_struct.budget }}</div>
-            <div id="all-shares">Всего паёв: {{ fin_struct.all_shares }}</div>
-            <div id="shares-left">Осталось паёв: {{ fin_struct.shares_left }}</div>
+            <h2 id="h2-general-statistics">Общая статистика</h2>
+            <div id="current-net-asset-value" class="div-general-statistics"><strong>Текущая стоимость чистых активов</strong> = {{ fin_struct.current_net_asset_value }}</div>
+            <div id="current-value-share" class="div-general-statistics"><strong>Текущая стоимость пая</strong> = {{ fin_struct.current_value_share }}</div>
+            <div id="budget" class="div-general-statistics"><strong>Бюджет</strong> = {{ fin_struct.budget }}</div>
+            <div id="all-shares" class="div-general-statistics"><strong>Всего паёв:</strong> {{ fin_struct.all_shares }}</div>
+            <div id="shares-left" class="div-general-statistics"><strong>Осталось паёв:</strong> {{ fin_struct.shares_left }}</div>
+            <div id="composition-fund">
+                <h2 id="h2-composition-fund">Состав фонда</h2>
+                <div id="securities-portfolio">
+                    <table id="securities-portfolio-table">
+                        <tr id="head-table-securrities-portfolio">
+                            <th class="th-securities-portfolio">Компания</th>
+                            <th class="th-securities-portfolio">Число акций</th>
+                            <th class="th-securities-portfolio">Доля в портфеле</th>
+                        </tr>
+                        {% for tr in securities_portfolio %}
+                            <tr class="tr-securities-portfolio">
+                                <td class="td-securities-portfolio">{{ tr.stock_company }}</td>
+                                <td class="td-securities-portfolio">{{ tr.number_shares }}</td>
+                                <td class="td-securities-portfolio">{{ tr.share_in_portfolio }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div> 
+            <div id="list-employees">
+                <h2 id="h2-list-employees">Список сотрудников</h2>
+                <table id="table-list-employees">
+                    <tr id="head-table-list-employees">
+                        <th class="th-list-employees">Имя</th>
+                        <th class="th-list-employees">Фамилия</th>
+                        <th class="th-list-employees">Электронная почта</th>
+                        <th class="th-list-employees">Телефонный номер</th>
+                        <th class="th-list-employees">Позиция</th>
+                        <th class="th-list-employees">Заработная плата</th>
+                    </tr>
+                    {% for employee in employees %}
+                        <tr class="tr-list-employees">
+                            <td class="td-list-employees">{{ employee.employee.first_name }}</td>
+                            <td class="td-list-employees">{{ employee.employee.last_name }}</td>
+                            <td class="td-list-employees">{{ employee.employee.email }}</td>
+                            <td class="td-list-employees">{{ employee.phone_number }}</td>
+                            <td class="td-list-employees">{{ employee.position }}</td>
+                            <td class="td-list-employees">{{ employee.salary }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
             <div id="reports">
+                <h2 id="h2-employee-reports">Отчёты сотрудников</h2>
                 <table id="table-reports">
                     <tr id="head-tr-table-reports">
                         <th class="th-reports">От кого</th>
@@ -37,7 +81,11 @@
                             <td class="td-reports">{{ report.employee }}</td>
                             <td class="td-reports">{{ report.report }}</td>
                             <td class="td-reports">{{ report.date }}</td>
-                            <td class="td-reports"><button id="view-pdf-btn"><a id="view-pdf-a" href='view_pdf/{{ report.id }}/'>Просмотреть</a></button></td>
+                            <td class="td-reports">
+                                <form action="view_pdf/{{ report.id }}/">
+                                    <button id="view-pdf-btn" class="btn">Просмотреть</button>
+                                </form> 
+                            </td>
                         </tr>
                     {% endfor %}
                 </table>

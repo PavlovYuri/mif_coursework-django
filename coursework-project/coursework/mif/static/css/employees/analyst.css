@@ -1,4 +1,81 @@
+main {
+    margin: 0px 100px;
+}
+
 #analytical-plan {
     display: flex;
     justify-content: center;
 }   
+
+#analytical-plan-form {
+    text-align: center;
+}
+
+.h3-analytical-plan {
+    text-align: center;
+}
+
+#table-analytical-plan {
+    text-align: center;
+    background-color: rgb(222, 222, 247);
+    border-radius: 10px;
+    margin: 0 50px 50px 50px;
+}
+
+.th-analytical-plan {
+    padding: 20px;
+}
+
+.td-analytical-plan{
+    padding: 20px;
+}
+
+#analytical-plan-form {
+    background-color: rgb(222, 222, 247);
+    height: 43ex;
+    width: 30ex;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.form-cell {
+    padding: 10px;
+}
+
+.analytical-input {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#div-analytical-plan-btn {
+    margin-top: 22px;
+}
+
+#financial-news {
+    margin-bottom: 20px;
+}
+
+.financial-news-date {
+    padding: 10px;
+}
+
+.financial-news-cell {
+    padding: 10px;
+}
+
+.financial-news-a {
+    text-decoration: none;
+}
+
+#sending-report {
+    padding-bottom: 50px;
+}
+
+#employee-input {
+    border: 2px solid rgb(63, 63, 241); 
+    border-radius: 5px;
+}
+
+#div-sending-report-button {
+    margin-top: 22px;
+}

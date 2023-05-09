@@ -1,0 +1,50 @@
+main {
+    margin: 0px 100px;
+}
+
+.div-general-statistics {
+    padding: 10px;
+}
+
+#securities-portfolio-table {
+    background-color: rgb(222, 222, 247);
+    border-radius: 10px;
+}
+
+.th-securities-portfolio {
+    padding: 20px;
+}
+
+.td-securities-portfolio {
+    padding: 20px;
+}
+
+#table-list-employees {
+    background-color: rgb(222, 222, 247);
+    border-radius: 10px;
+}
+
+.th-list-employees {
+    padding: 20px;
+}
+
+.td-list-employees {
+    padding: 20px;
+}
+
+#table-reports {
+    background-color: rgb(222, 222, 247);
+    border-radius: 10px;
+}
+
+.th-reports {
+    padding: 20px;
+}
+
+.td-reports {
+    padding: 20px;
+}
+
+#reports {
+    padding-bottom: 50px;
+}

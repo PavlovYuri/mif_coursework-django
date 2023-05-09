@@ -10,20 +10,76 @@
 
 
 {% block intro %}
-    <div id="intro">
-        <div id="in">
-            <h1 id="h1-intro">Добро пожаловать!</h1>
-            <h2 id="h2-intro">Наш паевой инвестиционный фонд поможет Вам выгодно инвестировать свои средства с минимальными рисками</h2>
-            <div id="intro-buttons">
-                <button id="signup-button">
-                    <a id="signup" href="{% url 'signupuser' %}">Зарегистрироваться</a>
-                </button>
-                <button id="login-button">
-                    <a id="login" href="{% url 'loginuser' %}">Войти</a>
-                </button>
+    <main>
+        <div id="intro">
+            <div id="in">
+                <h1 id="h1-intro">Добро пожаловать!</h1>
+                <h2 id="h2-intro">Наш паевой инвестиционный фонд поможет Вам выгодно инвестировать свои средства с минимальными рисками</h2>
+                <div id="intro-buttons">
+                    <form action="{% url 'signupuser' %}">
+                        <button id="signup-button" class="btn">Зарегистрироваться</button>
+                    </form>
+                    <form action="{% url 'loginuser' %}">
+                        <button id="login-button" class="btn">Войти</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+        <div id="sub-main">
+            <div id="about-fund" class="main-div-block">
+                <h2 id="h2-about-fund">О фонде</h2>
+                <p id="about-fund-text">Фонд предназначен для инвесторов, которые интересуются современными технологическими компаниями из таких секторов,<br>как ИТ (информационные технологии), биотехнологии, альтернативная энергетика, искусственный интеллект, облачные сервисы и решения.<br>Именно в этих сегментах ожидается рост в долгосрочной перспективе за счет внедрения новейших разработок.<br>Основной фокус ПИФа — акции американских компаний, однако в портфель могут быть добавлены и другие инструменты в зависимости от ситуации на рынке.</p>
+            </div>
+            <div id="current-value-share" class="main-div-block">
+                <h2 id="h2-current-value-share">Текущая стоимость пая</h2>
+                <div id="meaning-current-value-share">{{ current_value_share }} {% if change > 0 %}<span class="income-span">+{{ change }}%</span>{% else %}<span id="expence-span">{{ change }}%</span>{% endif %}</div>
+            </div>
+            <div id="shares-left" class="main-div-block">
+                <h2 id="h2-shares-left">Осталось паёв</h2>
+                <div id="meaning-shares-left">{{ fin_struct.shares_left }}</div>
+                <div id="invest">
+                    {% if user.is_authenticated %}
+                        {% if user.userprofile.opened_personal_account == True %}
+                            <form action="{% url 'invest' %}">
+                                <button id="invest-approval-btn" class="btn">Инвестировать</button>
+                            </form>
+                        {% else %}
+                            <form action="{% url 'currentuser' %}">
+                                <button id="invest-currentuser-btn" class="btn">Инвестировать</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <form action="{% url 'signupuser' %}">
+                            <button id="invest-signup-btn" class="btn">Инвестировать</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="composition-fund" class="main-div-block">
+                <h2 id="h2-composition-fund">Состав фонда</h2>
+                <div id="securities-portfolio">
+                    <table id="securities-portfolio-table">
+                        <tr id="head-table-securrities-portfolio">
+                            <th class="th-securities-portfolio">Компания</th>
+                            <th class="th-securities-portfolio">Число акций</th>
+                            <th class="th-securities-portfolio">Доля в портфеле</th>
+                        </tr>
+                        {% for tr in securities_portfolio %}
+                            <tr class="tr-securities-portfolio">
+                                <td class="td-securities-portfolio">{{ tr.stock_company }}</td>
+                                <td class="td-securities-portfolio">{{ tr.number_shares }}</td>
+                                <td class="td-securities-portfolio">{{ tr.share_in_portfolio }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <p>Все права защищены</p>
+            </footer>
+        </div>
+    </main>
 
 {% endblock intro %}
 

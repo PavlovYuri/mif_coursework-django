@@ -10,7 +10,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from .employee_functions.employee_functions import *
 
 def main(request):
-    return render(request, "mif/main.html")
+    current_value_share, change = calculate_share()
+    fin_struct = FinDistribution.objects.get(id=1)
+    securities_portfolio = StockStorage.objects.all()
+    return render(request, "mif/main.html", {'current_value_share': current_value_share, 'change': change, 'fin_struct': fin_struct, 'securities_portfolio': securities_portfolio})
 
 def signupuser(request):
     if request.method == 'POST':
@@ -185,7 +188,9 @@ def analyst(request):
 def director(request):
     fin_struct = FinDistribution.objects.get(id=1)
     reports = Report.objects.all()
-    return render(request, 'mif/employees/director.html', {'fin_struct': fin_struct, 'reports': reports})
+    securities_portfolio = StockStorage.objects.all()
+    employees = EmployeeProfile.objects.all()
+    return render(request, 'mif/employees/director.html', {'fin_struct': fin_struct, 'reports': reports, 'securities_portfolio': securities_portfolio, 'employees': employees})
 
 
 def view_pdf(request, report_id):

@@ -28,3 +28,42 @@
     margin-left: 10px;
 }
 
+#sub-main {
+    margin: 0px 100px;
+}
+
+.main-div-block {
+    margin: 50px 0px;
+}
+
+#meaning-shares-left {
+    margin-bottom: 23px;
+}
+
+#securities-portfolio-table {
+    background-color: rgb(222, 222, 247);
+    border-radius: 10px;
+}
+
+.th-securities-portfolio {
+    padding: 20px;
+}
+
+.td-securities-portfolio {
+    padding: 20px;
+}
+
+hr {
+    color: black;
+    width: 100%;
+}
+
+.expence-span {
+    color: rgb(185, 29, 29);
+    font-weight: 700;
+}
+
+.income-span {
+    color: rgb(7, 145, 14);
+    font-weight: 700;
+}
