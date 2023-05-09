@@ -17,17 +17,19 @@
                 <div id="div-h1-invest" class="div-invest">
                     <h1 id="h1-invest">Инвестирование</h1>
                 </div>
-                <div id="current-value-share" class="div-invest">Текущая стоимость пая = {{ fin_struct.current_value_share }}</div>
+                <div id="current-value-share" class="div-invest">Текущая стоимость пая = <span id="current-value-share-span">{{ fin_struct.current_value_share }}</span></div>
+                <div id="all-shares" class="div-invest">Всего паёв: <span id="all-shares-span">{{ fin_struct.all_shares }}</span></div>
                 <div id="shares-left" class="div-invest">Осталось паёв: {{ fin_struct.shares_left }}</div>
                 <div id="div-invest-form" class="div-invest">
                     <form method="POST" id="invest-form">
                         {% csrf_token %}
                         <div id="choosing-number-shares" class="div-invest">Выберите количество паёв:</div>
                         <div id="div-invest-input" class="div-invest">
+                            <div id="error" class="div-invest">{{ error }}</div>
                             <input id="number-shares-input" type="text" name="number_shares" required>
                         </div>
-                        <div id="your-share" class="div-invest">Ваша доля составляет:</div>
-                        <div id="your-investment" class="div-invest">Ваша инвестиция составляет:</div>
+                        <div id="your-share" class="div-invest">Ваша доля составляет:<span id="your-share-span"></span></div>
+                        <div id="your-investment" class="div-invest">Ваша инвестиция составляет:<span id="your-investment-span"></span></div>
                         <div id="div-invest-button" class="div-invest">
                             <button id="invest-btn" class="btn" type="submit">Инвестировать</button>
                         </div>
@@ -49,3 +51,7 @@
         {% endif %}
     </main>
 {% endblock content %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/invest.js' %}"></script>
+{% endblock scripts %}

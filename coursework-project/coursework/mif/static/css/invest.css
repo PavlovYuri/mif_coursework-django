@@ -11,6 +11,11 @@ main {
     margin: 20px;
 }
 
+#error {
+    color: rgb(185, 29, 29);
+    margin-left: 0px;
+}
+
 #number-shares-input {
     border: 2px solid rgb(63, 63, 241); 
     border-radius: 5px;

@@ -73,7 +73,7 @@ def calculate_incomes_clients():
         client.current_balance = round(client.share * fin_struct.current_net_asset_value, 2)
         client_expense += client.current_balance
 
-    return [clients, round(client_expense)]
+    return [clients, round(client_expense, 2)]
 
 def get_analytical_plan():
     plan_objects = AnalyticalPlan.objects.exclude(is_completed__exact=True)

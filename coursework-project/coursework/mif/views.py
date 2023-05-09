@@ -86,15 +86,18 @@ def currentuser(request):
 def invest(request):
     if request.method == 'POST':
         fin_struct = FinDistribution.objects.get(id=1)
-        request.user.userprofile.share += int(request.POST['number_shares']) / fin_struct.all_shares
-        request.user.userprofile.recent_purchase = int(request.POST['number_shares'])
-        request.user.userprofile.is_processed = False
-        request.user.userprofile.save()
-        fin_struct.current_net_asset_value += int(request.POST['number_shares']) * fin_struct.current_value_share
-        fin_struct.budget += int(request.POST['number_shares']) * fin_struct.current_value_share
-        fin_struct.save()
-        calculate_share()
-        return redirect('currentuser')
+        if int(request.POST['number_shares']) <= fin_struct.shares_left:
+            request.user.userprofile.share += int(request.POST['number_shares']) / fin_struct.all_shares
+            request.user.userprofile.recent_purchase = int(request.POST['number_shares'])
+            request.user.userprofile.is_processed = False
+            request.user.userprofile.save()
+            fin_struct.current_net_asset_value += int(request.POST['number_shares']) * fin_struct.current_value_share
+            fin_struct.budget += int(request.POST['number_shares']) * fin_struct.current_value_share
+            fin_struct.save()
+            calculate_share()
+            return redirect('currentuser')
+        else:
+            return render(request, "mif/invest.html", {'fin_struct': fin_struct, 'error': 'Осталось меньшее число паёв!'})
     else:
         calculate_remaining_number_shares()
         fin_struct = FinDistribution.objects.get(id=1)

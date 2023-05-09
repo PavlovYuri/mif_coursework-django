@@ -21,14 +21,13 @@
                             <button id="logoutuser-btn" class="btn-exit" type="submits">Выйти</button>
                         </form>
                     </div>
-                    <h3 id="h3-user-data">Личные данные</h3>
                     <form id="form-user-data" method="POST">
                         {% csrf_token %}
                         <table id="table-user-data">
                             <tr id="head-tr-user-data">
-                                <th class="th-user-data"></th>
-                                <th class="th-user-data">Старые данные</th>
-                                <th class="th-user-data">Новые данные</th>
+                                <th class="th-user-data">Личные данные</th>
+                                <th class="th-user-data"><span id="old-data">Старые данные</span></th>
+                                <th class="th-user-data"><span id="new-data">Новые данные</span></th>
                             </tr>
                             <tr class="tr-user-data">
                                 <td class="td-user-data"><strong>Имя аккаунта</strong></td>
@@ -63,17 +62,20 @@
                         </table>
                         <div id="user-data-buttons">
                             <button id="change-user-data-btn" class="btn">Изменить</button>
-                            <button id="save-changes-user-data" class="btn" type="submit">Сохранить изменения</button>
+                            <button id="save-changes-user-data-btn" class="btn" type="submit">Сохранить изменения</button>
                         </div>
                     </form>
                 </div>
                 <div id="financial-information" class="currentuser-container">
+                    <h2 id="h2-financial-inforamtion">Открытие лицевого счёта и инвестирование</h2>
                     <div id="personal-account">
                             {% if user_profile.opened_personal_account == False %}
                                 <form method="POST" id="personal-account-form">  
                                     {% csrf_token %}
-                                    <div id="p-personal-account">Согласны ли вы открыть лицевой счёт?<input id="personal-account-input" type="checkbox" name="approval"></div>
-                                    <button id="personal-account-btn" type="submit" class="btn">Открыть лицевой счёт</button>
+                                    <div class="div-personal-account">Согласны ли вы открыть лицевой счёт?<input id="personal-account-input" type="checkbox" name="approval"></div>
+                                    <div class="div-personal-account">
+                                        <button id="personal-account-btn" type="submit" class="btn">Открыть лицевой счёт</button>
+                                    </div>
                                 </form>  
                             {% else %}
                                 <div><strong>Вы имеете лицевой счёт</strong></div>
@@ -95,10 +97,10 @@
                         {% endif %}
                     </div>
                     <div class="client-income" class="div-currentuser">
-                        <div id="share">Ваша доля в фонде = {{ current_share }}</div>
+                        <div id="share" class="div-financial-information"><strong>Ваша доля в фонде</strong> = {{ current_share }}</div>
                     </div>
                     <div class="client-income" class="div-currentuser">
-                        <div id="current-balance">Ваш текущий баланс = {{ current_balance }}</div>
+                        <div id="current-balance" class="div-financial-information"><strong>Ваш текущий баланс</strong> = {{ current_balance }}</div>
                     </div>
                 </div>
             </div>
@@ -115,5 +117,10 @@
                 </div>
             </div>
         {% endif %}
+        
     </main>
 {% endblock content %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/currentuser.js' %}"></script>
+{% endblock scripts %}

@@ -24,6 +24,10 @@ main {
     border-radius: 5px;
 }
 
+.div-personal-account {
+    padding: 10px 0px;
+}
+
 #invest {
     margin-left: 0px;
 }
@@ -31,3 +35,8 @@ main {
 .div-currentuser {
     margin: 20px;
 }
+
+.div-financial-information {
+    font-size: 20px;
+}
+
